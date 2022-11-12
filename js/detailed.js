@@ -1,0 +1,6 @@
+class DetailedView{
+
+    constructor(appState) {
+        
+    }
+}
