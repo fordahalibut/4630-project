@@ -3,6 +3,7 @@ class ScatterPlot{
     constructor(appState) {
         
         this.data = appState.monsterData;
+        this.fullData = appState.monsterData;
 
         // Declare margins
         this.margin = {
@@ -43,6 +44,10 @@ class ScatterPlot{
             indicator: "size",
             label: "Size"
         }];
+
+        this.xIndicator = 'hit_points';
+        this.yIndicator = 'challenge_rating';
+        this.categoryIndicator = 'type';
     }
 
     /**TODO: 
@@ -55,10 +60,10 @@ class ScatterPlot{
 
     drawScatterplot(){
 
-        // Append tooltip div
         let chartArea = d3.select('#scatter-area')
 
-        let tooltip = chartArea
+        // Append tooltip div
+        this.tooltip = chartArea
             .append('div')
             .classed('tooltip', true)
             .style('opacity', 0);
@@ -66,7 +71,8 @@ class ScatterPlot{
         // Append chart svg
         let svg = chartArea.append('svg')
             .attr('width', this.vizWidth + this.margin.left + this.margin.right)
-            .attr('height', this.vizHeight + this.margin.top + this.margin.bottom);
+            .attr('height', this.vizHeight + this.margin.top + this.margin.bottom)
+            .attr('id', 'scatterplot');
         
         let chartGroup = svg.append('g').classed('wrapper-group', true);
 
@@ -93,30 +99,205 @@ class ScatterPlot{
         let dropdown = chartArea.append('div')
             .classed('dropdown-wrapper', true);
 
+        let xWrapper = dropdown.append('div')
+            .classed('dropdown-panel', true);
 
+        xWrapper.append('div')
+            .classed('x-label', true)
+            .append('text')
+            .text('X Axis Data:');
 
+        xWrapper.append('div')
+            .attr('id', 'dropdown_x')
+            .classed('dropdown', true)
+            .append('div')
+            .classed('dropdown-content', true)
+            .append('select');
 
+        let yWrapper = dropdown.append('div')
+            .classed('dropdown-panel', true);
 
-        this.xScale = d3.scaleLinear()
-            .domain([0, d3.max(this.data, d=> d.challenge_rating)])
-            .range([this.margin.left + this.margin.right, this.vizWidth]);
+        yWrapper.append('div')
+            .classed('y-label', true)
+            .append('text')
+            .text('Y Axis Data:');
 
-        this.yScale = d3.scaleLinear()
-            .domain([0, d3.max(this.data, d=> d.hit_points)])
-            .range([this.vizHeight, this.margin.top + this.margin.bottom]);
+        yWrapper.append('div')
+            .attr('id', 'dropdown_y')
+            .classed('dropdown', true)
+            .append('div')
+            .classed('dropdown-content', true)
+            .append('select');
+
+        let colorWrapper = dropdown.append('div')
+            .classed('dropdown-panel', true);
         
+        colorWrapper.append('div')
+            .classed('c-label', true)
+            .append('text')
+            .text('Category Choice:');
+        
+        colorWrapper.append('div')
+            .attr('id', 'colorWrapper')
+            .classed('dropdown', true)
+            .append('div')
+            .classed('dropdown-content', true)
+            .append('select');
 
-
-        svg.selectAll('circle')
-            .data(this.data)
-            .join('circle')
-            .attr('cx', d=> this.xScale(d.challenge_rating))
-            .attr('cy', d=> this.yScale(d.hit_points))
-            .attr('r', 5);      
+        let colorLegend = chartArea.append('div')
+            .classed('color-legend', true)
+            .append('svg')
+            .append('g')
+            .attr('transform', 'translate(10, 0)');
+            
+        this.updateScatterplot(this.data, this.xIndicator, this.yIndicator, this.categoryIndicator);
 
     }
 
-    updateScatterplot(xAxis, yAxis, colorAxis){
+    updateScatterplot(data, xIndicator, yIndicator, colorIndicator){
+        
+        this.xIndicator = xIndicator;
+        this.yIndicator = yIndicator;
+        this.colorIndicator = colorIndicator;
+        this.data = data;
+
+
+        // Define scales
+        this.xScale = d3.scaleLinear()
+            .domain([0, d3.max(this.fullData, d => d[xIndicator])])
+            .range([this.margin.left + this.margin.right, this.vizWidth]);
+
+        this.yScale = d3.scaleLinear()
+            .domain([0, d3.max(this.fullData, d => d[yIndicator])])
+            .range([this.vizHeight, this.margin.top + this.margin.bottom]);
+
+        this.colorScale = d3.scaleOrdinal(d3.schemeSet3);
+
+        // Draw circles
+        d3.select('#scatterplot')
+            .selectAll('circle')
+            .data(this.data)
+            .join('circle')
+            .attr('id', (d,i) => d.index)
+            .attr('cx', d=> this.xScale(d[xIndicator]))
+            .attr('cy', d=> this.yScale(d[yIndicator]))
+            .attr('fill', d=> this.colorScale(d[colorIndicator]))
+            .attr('r', 10)
+            .on('mouseup', (d,i) => {
+
+                // Update selections
+
+            })
+            .on('mouseover', function(d) {
+
+                let pos = d3.select(this).node().getBoundingClientRect();
+
+                d3.select(this)
+                    .style('stroke-width', 2);
+
+                let content = d.path[0].__data__.name;
+                
+                d3.select('.tooltip')
+                    .style('opacity', 0.9)
+                    .html(`<h4>${content}</h4`)
+                    .style('left', `${pos['x'] + 5}px`)
+                    .style('top', `${(window.pageYOffset  + pos['y'] - 15)}px`);
+            })
+            .on('mouseout', function(d) {
+                d3.select(this).style('stroke-width', 1);
+                d3.select('.tooltip')
+                .attr('transform', 'translate(0,0)')
+                .style('opacity', 0);
+            });
+
+        // Axis labels
+        let xLabel = this.numericIndicators.filter(d => d.indicator === xIndicator)[0].label;
+        let xAxis = d3.select('#x-axis')
+            .call(d3.axisBottom(this.xScale).ticks(10))
+            .select('text')
+            .text(xLabel);
+
+        let yLabel = this.numericIndicators.filter(d => d.indicator === yIndicator)[0].label;
+        let yAxis = d3.select('#y-axis')
+            .call(d3.axisLeft(this.yScale).ticks(10))
+            .select('text')
+            .text(yLabel);
+
+        this.drawLegend(colorIndicator);
+        this.drawDropdowns(xIndicator, yIndicator, colorIndicator);
+            
+    }
+
+    drawLegend(colorIndicator){
+
+    }
+
+    drawDropdowns(xIndicator, yIndicator, colorIndicator){
+        let that = this;
+        let dropDownWrapper = d3.select('.dropdown-wrapper');
+
+        /* X DROPDOWN */
+        let dropX = dropDownWrapper.select('#dropdown_x').select('.dropdown-content').select('select');
+
+        let optionsX = dropX.selectAll('option')
+            .data(this.numericIndicators)
+            .join("option")
+            .attr('value', d=> d.indicator)
+
+        optionsX.join("text")
+            .text(d => d.label);
+    
+        let selectedX = optionsX.filter(d => d.indicator === xIndicator)
+            .attr('selected', true);
+
+        dropX.on('change', function (d, i) {
+            let xValue = this.options[this.selectedIndex].value;
+            let yValue = dropY.node().value;
+            let cValue = dropC.node().value;
+            that.updatePlot(that.data, xValue, yValue, cValue);
+        });
+
+        /* Y DROPDOWN */
+        let dropY = dropDownWrapper.select('#dropdown_y').select('.dropdown-content').select('select');
+
+        let optionsY = dropY.selectAll('option')
+            .data(this.numericIndicators)
+            .join("option")
+            .attr('value', d => d.indicator)
+       
+        optionsY.join('text')
+            .text(d => d.label);
+
+        let selectedY = optionsY.filter(d => d.indicator === yIndicator)
+            .attr('selected', true);
+
+        dropY.on('change', function (d, i) {
+            let yValue = this.options[this.selectedIndex].value;
+            let xValue = dropX.node().value;
+            let cValue = dropC.node().value;
+            that.updatePlot(that.data, xValue, yValue, cValue);
+        });
+
+        /* COLOR DROPDOWN */
+        let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').select('select');
+        let optionsC = dropC.selectAll('option')
+            .data(this.indicators)
+            .join("option")
+            .attr('value', d => d.indicator)
+
+        optionsC.join("text")
+            .text(d => d.label);
+
+        let selectedC = optionsC.filter(d => d.indicator === circleSizeIndicator)
+            .attr('selected', true);
+
+        dropC.on('change', function (d, is) {
+            let cValue = this.options[this.selectedIndex].value;
+            let xValue = dropX.node().value;
+            let yValue = dropY.node().value;
+            that.updatePlot(that.data, xValue, yValue, cValue);
+        });
+
 
     }
 }
