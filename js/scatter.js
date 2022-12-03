@@ -138,7 +138,7 @@ class ScatterPlot{
             .text('Category Choice:');
         
         colorWrapper.append('div')
-            .attr('id', 'colorWrapper')
+            .attr('id', 'dropdown_c')
             .classed('dropdown', true)
             .append('div')
             .classed('dropdown-content', true)
@@ -254,7 +254,7 @@ class ScatterPlot{
             let xValue = this.options[this.selectedIndex].value;
             let yValue = dropY.node().value;
             let cValue = dropC.node().value;
-            that.updatePlot(that.data, xValue, yValue, cValue);
+            that.updateScatterplot(that.data, xValue, yValue, cValue);
         });
 
         /* Y DROPDOWN */
@@ -275,27 +275,28 @@ class ScatterPlot{
             let yValue = this.options[this.selectedIndex].value;
             let xValue = dropX.node().value;
             let cValue = dropC.node().value;
-            that.updatePlot(that.data, xValue, yValue, cValue);
+            that.updateScatterplot(that.data, xValue, yValue, cValue);
         });
 
         /* COLOR DROPDOWN */
         let dropC = dropDownWrapper.select('#dropdown_c').select('.dropdown-content').select('select');
+
         let optionsC = dropC.selectAll('option')
-            .data(this.indicators)
+            .data(this.categoryIndicators)
             .join("option")
             .attr('value', d => d.indicator)
 
         optionsC.join("text")
             .text(d => d.label);
 
-        let selectedC = optionsC.filter(d => d.indicator === circleSizeIndicator)
+        let selectedC = optionsC.filter(d => d.indicator === colorIndicator)
             .attr('selected', true);
 
         dropC.on('change', function (d, is) {
             let cValue = this.options[this.selectedIndex].value;
             let xValue = dropX.node().value;
             let yValue = dropY.node().value;
-            that.updatePlot(that.data, xValue, yValue, cValue);
+            that.updateScatterplot(that.data, xValue, yValue, cValue);
         });
 
 
