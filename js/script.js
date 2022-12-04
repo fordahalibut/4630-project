@@ -66,6 +66,8 @@ loadData().then((loadedData) => {
         let alignments =  [...new Set(appState.monsterData.map(d => d.alignment))];
         let ranges = ['challenge_rating', 'hit_points', 'armor_class', 'xp'];
         let filterData = appState.monsterData;
+
+        console.log(alignments);
         
         // Filter sliders
         for (label of ranges) {
@@ -120,6 +122,8 @@ loadData().then((loadedData) => {
 
             let filteredTypes = [];
 
+            let filteredName = d3.select('#nameSearch').property('value').toLowerCase();
+
             for (t of types) {
                 let li = d3.select(`#t-${t}`);
 
@@ -133,7 +137,8 @@ loadData().then((loadedData) => {
                 (monster.hit_points >= minHP && monster.hit_points <= maxHP) &&
                 (monster.armor_class >= minAC && monster.armor_class <= maxAC) &&
                 (monster.xp >= minXP && monster.xp <= maxXP) &&
-                (filteredTypes.includes(monster.type))
+                (filteredTypes.includes(monster.type)) &&
+                (monster.name.toLowerCase().includes(filteredName))
                 )
 
             appState.filteredData = filtered;
@@ -178,6 +183,8 @@ loadData().then((loadedData) => {
                     }
                 });
             }
+
+            d3.select('#nameSearch').property('value', '');
 
         })
     

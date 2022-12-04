@@ -137,7 +137,7 @@ class ScatterPlot{
         colorWrapper.append('div')
             .classed('c-label', true)
             .append('text')
-            .text('Category Choice:');
+            .text('Category:');
         
         colorWrapper.append('div')
             .attr('id', 'dropdown_c')
