@@ -8,3 +8,48 @@ div.tooltip {
     border-radius: 8px;			
     pointer-events: none;			
 }
+
+.axis-label {
+    font: 12px sans-serif;
+}
+
+.tooltip h4 {
+    margin: auto;
+    font: 14px sans-serif;
+    font-weight: bold;
+}
+
+div.dropdown-wrapper {
+    display: flex;
+    margin: 0 auto;
+    padding: 2px;
+    justify-content: space-evenly;
+}
+
+.dropdown-panel {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.dropdown-content {
+    text-align: left;
+}
+.y-label,
+.x-label,
+.c-label {
+    width: 1%7;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+div .row {
+    height: 700px;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+}
+
+th #stats {
+    text-align: center;
+}

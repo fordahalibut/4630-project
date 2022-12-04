@@ -45,29 +45,21 @@
               <div class="container-fluid">
                 <div class="row">
                   <div class="col-lg">
-                    <div class="table">
+                    <div class="table-wrapper-scroll-y">
                         <table id="dataTable" class = "table table-striped table-hover" width="100%">
                             <thead>
                                 <tr id="columnHeaders">
-                                    <th id = 'name' class="sortable">Name</th>
-                                    <th id = 'type' class="sortable">Type</i></th>
-                                    <th id = 'challenge_rating' class="sortable">CR</th>
-                                    <th id = 'hit_points' class="sortable">HP</th>
-                                    <th id = 'armor_class' class="sortable">AC</th>
-                                    <th id = 'stat_viz' class="sortable">Stats</th>
+                                    <th id = 'name' class="sortable align-middle">Name</th>
+                                    <th id = 'type' class="sortable align-middle">Type</i></th>
+                                    <th id = 'challenge_rating' class="sortable align-middle">CR</th>
+                                    <th id = 'hit_points' class="sortable align-middle">HP</th>
+                                    <th id = 'armor_class' class="sortable align-middle">AC</th>
+                                    <th id = 'xp' class="sortable align-middle">XP Value</th>
+                                    <th id = 'stats' class="sortable text-center">Stats <br><svg id="statViz"></svg></th>
 
                                 </tr>
                                 </thead>
                                 <tbody id="dataTableBody">
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td><svg id="statViz"></svg></td>
-                                        
-                                    </tr>
                     
                                 </tbody>
                         </table>
@@ -80,6 +72,7 @@
                     
                   </div>
                 </div>
+                <div class="row"></div>
               </div>
         </main>
     
