@@ -7,10 +7,10 @@ class ScatterPlot{
 
         // Declare margins
         this.margin = {
-            left: 20,
-            right: 20,
-            top: 20,
-            bottom: 20
+            left: 30,
+            right: 30,
+            top: 30,
+            bottom: 30
         };
 
         this.vizWidth = 600;
@@ -66,6 +66,7 @@ class ScatterPlot{
         this.tooltip = chartArea
             .append('div')
             .classed('tooltip', true)
+            .attr('id', 'chart-tooltip')
             .style('opacity', 0);
 
         // Append chart svg
@@ -89,10 +90,10 @@ class ScatterPlot{
         let y = chartGroup.append('g')
             .classed('axis', true)
             .attr('id', 'y-axis')
-            .attr("transform", `translate(${this.margin.bottom * 2}, 0)`)
+            .attr("transform", `translate(${this.margin.bottom + this.margin.top}, 0)`)
             .append("text").text('')
             .classed("axis-label", true)
-            .attr("transform", `translate(-35, ${this.vizHeight/2}) rotate(270)`)
+            .attr("transform", `translate(-25, ${this.vizHeight/2}) rotate(270)`)
             .attr("text-align", "center");
 
         // Append dropdowns
@@ -197,7 +198,7 @@ class ScatterPlot{
 
                 let content = d.path[0].__data__.name;
                 
-                d3.select('.tooltip')
+                d3.select('#chart-tooltip')
                     .style('opacity', 0.9)
                     .html(`<h4>${content}</h4`)
                     .style('left', `${pos['x'] + 5}px`)
@@ -205,7 +206,7 @@ class ScatterPlot{
             })
             .on('mouseout', function(d) {
                 d3.select(this).style('stroke-width', 1);
-                d3.select('.tooltip')
+                d3.select('#chart-tooltip')
                 .attr('transform', 'translate(0,0)')
                 .style('opacity', 0);
             });
