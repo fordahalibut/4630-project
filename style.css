@@ -95,3 +95,24 @@ th #stats {
     height: 700px;
     overflow-y: auto;
   }
+
+  label {
+    font-weight: bold;
+}
+
+.filter-label {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: hidden;
+    background-color: #eee;
+}
+#type-selection .ui-selecting { background: #FECA40; }
+#type-selection .ui-selected { background: #F39814; color: white; }
+#type-selection { list-style-type: none; margin: 0; padding: 0; width: 600px; }
+#type-selection li { margin: 3px; padding: 1px; float: left; width: 100px; height: 40px; text-align: center;}
+
+#alignment-selection .ui-selecting { background: #FECA40; }
+#alignment-selection .ui-selected { background: #F39814; color: white; }
+#alignment-selection { list-style-type: none; margin: 0; padding: 0; width: 600px; }
+#alignment-selection li { margin: 3px; padding: 1px; float: left; width: 100px; height: 40px; text-align: center;}

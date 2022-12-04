@@ -5,7 +5,7 @@ class Table {
      */
     constructor(appState) {
 
-        this.data = appState.monsterData;
+        this.data = appState.filteredData;
         this.filteredData = [...this.data];
 
         this.vizWidth = 300;
@@ -90,6 +90,8 @@ class Table {
 
         d3.select('#dataTableBody').selectAll('rect').remove();
         this.updateHeaders();
+
+
 
         // Append tooltip div
         this.tooltip = d3.select('#dataTable')

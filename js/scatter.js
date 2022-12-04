@@ -2,7 +2,7 @@
 class ScatterPlot{
     constructor(appState) {
         
-        this.data = appState.monsterData;
+        this.data = appState.filteredData;
         this.fullData = appState.monsterData;
 
         // Declare margins
@@ -60,7 +60,8 @@ class ScatterPlot{
 
     drawScatterplot(){
 
-        let chartArea = d3.select('#scatter-area')
+        let chartArea = d3.select('#scatter-area');
+        this.data = appState.filteredData;
 
         // Append tooltip div
         this.tooltip = chartArea

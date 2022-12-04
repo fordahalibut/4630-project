@@ -33,7 +33,7 @@
                     </ul>
             
                     <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                      <label for="nameSearch">Search by Monster Name:</label>
+                      <label for="nameSearch">Filter by Monster Name:</label>
                       <input type="search" id = "nameSearch" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
                     </form>
             
@@ -44,26 +44,44 @@
               <button type="button" class="collapsible">Filters</button>
               <div id="filters" class="content">
                 <form>
-                  <div>
-                    <label for="challenge_rating-label">Challenge Rating:</label>
-                    <input type="text" id="challenge_rating-label" readonly/>
+                  <div class = "container-fluid">
+                    <div class = "row">
+                      <div class = "col">
+                        <div class="w-75">
+                          <label for="challenge_rating-label">Challenge Rating:</label>
+                          <input type="text" id="challenge_rating-label" class = "filter-label" readonly/>
+                          <div id="challenge_rating-range"></div>
+                        </div>
+                        
+                        <div class="w-75">
+                          <label for="hit_points-label">Hit Points:</label>
+                          <input type="text" id="hit_points-label" class = "filter-label" readonly/>
+                          <div id="hit_points-range"></div>
+                        </div>
+                        
+                        <div class="w-75">
+                          <label for="armor_class-label">Armor Class:</label>
+                          <input type="text" id="armor_class-label" class = "filter-label" readonly/>
+                          <div id="armor_class-range"></div>
+                        </div>
+                        
+                        <div class="w-75">
+                          <label for="xp-label">XP Value:</label>
+                          <input type="text" id="xp-label" class = "filter-label" readonly/>
+                          <div id="xp-range"></div>
+                        </div>
+                      </div>
+                      <div class = "col">
+                        <label for="type-selection">Monster Type:</label>
+                        <ol id="type-selection">
+                        </ol>
+                      </div>
+                      <div class = "col">
+                        <button type="submit" id = "apply-button" class="btn btn-primary">Apply</button>
+                        <button type="submit" id = "clear-button" class="btn btn-secondary">Clear Filters</button>
+                      </div>
+                    </div>
                   </div>
-                  <div id="challenge_rating-range"></div>
-                  <div>
-                    <label for="hit_points-label">Armor Class:</label>
-                    <input type="text" id="hit_points-label" readonly/>
-                  </div>
-                  <div id="hit_points-range"></div>
-                  <div>
-                    <label for="armor_class-label">Hit Points:</label>
-                    <input type="text" id="armor_class-label" readonly/>
-                  </div>
-                  <div id="armor_class-range"></div>
-                  <div>
-                    <label for="xp-label">XP Value:</label>
-                    <input type="text" id="xp-label" readonly/>
-                  </div>
-                  <div id="xp-range"></div>
                 </form>
             </div>
 
