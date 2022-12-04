@@ -41,6 +41,7 @@ loadData().then((loadedData) => {
         // Selection logic
         $('.table > tbody > tr').click(function() {
             $(this).toggleClass("selected");
+            console.log('here');
         });
 
         $('circle').click(function() {
@@ -146,7 +147,7 @@ loadData().then((loadedData) => {
             const table = new Table(appState);
             appState.table = table;
             table.drawTable();
-            scatter.drawScatterplot();
+            scatter.updateScatterplot(appState.filteredData, 'hit_points', 'challenge_rating', 'type');
 
         })
 
@@ -155,7 +156,7 @@ loadData().then((loadedData) => {
 
             appState.filteredData = appState.monsterData;
             table.drawTable();
-            scatter.drawScatterplot();
+            scatter.updateScatterplot(appState.filteredData, 'hit_points', 'challenge_rating', 'type');
 
             for (t of types) {
                 let li = d3.select(`#t-${t}`);
