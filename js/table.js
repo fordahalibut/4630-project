@@ -125,6 +125,8 @@ class Table {
 
                     // Update appState selection
                     appState.selected = appState.monsterData.filter(monster => monster.index === newID);
+                    appState.detailed.drawDetailed();
+
 
                 }
             });

@@ -34,6 +34,8 @@ loadData().then((loadedData) => {
 
     
     const detailed = new DetailedView(appState);
+    appState.detailed = detailed;
+    detailed.drawDetailed();
   
 
 
@@ -63,8 +65,6 @@ loadData().then((loadedData) => {
         let alignments =  [...new Set(appState.monsterData.map(d => d.alignment))];
         let ranges = ['challenge_rating', 'hit_points', 'armor_class', 'xp'];
         let filterData = appState.monsterData;
-
-        console.log(alignments);
         
         // Filter sliders
         for (label of ranges) {
@@ -74,8 +74,6 @@ loadData().then((loadedData) => {
 
             d3.select('#' + label + '-label')
                 .property('value', minValue + '-' + maxValue);
-
-                console.log('#' + label + '-range');
 
             $('#' + label + '-range').slider({
                 range: true,

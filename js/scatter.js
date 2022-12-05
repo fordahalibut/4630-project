@@ -50,14 +50,6 @@ class ScatterPlot{
         this.categoryIndicator = 'type';
     }
 
-    /**TODO: 
-            - split into initial draw and update functions
-            - selectable axis - scales need to update
-            - selectable categories for color
-            - interaction with global filters
-            - interaction with table - select row highlights graph result, brush on graph filters table
-        */
-
     drawScatterplot(){
 
         let chartArea = d3.select('#scatter-area');
@@ -206,6 +198,7 @@ class ScatterPlot{
 
                     // Update appState selection
                     appState.selected = appState.monsterData.filter(monster => monster.index === newID);
+                    appState.detailed.drawDetailed();
 
                 }
 

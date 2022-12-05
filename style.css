@@ -113,6 +113,8 @@ div .selected {
     border-bottom-style: hidden;
     background-color: #eee;
 }
+
+/* Selection styling */
 #type-selection .ui-selecting { background: #686764; }
 #type-selection .ui-selected { background: #686764; }
 #type-selection { list-style-type: none; margin: 0; padding: 0; width: 600px; }
@@ -122,3 +124,23 @@ div .selected {
 #alignment-selection .ui-selected { background: #686764; }
 #alignment-selection { list-style-type: none; margin: 0; padding: 0; width: 600px; }
 #alignment-selection li { margin: 3px; padding: 1px; float: left; width: 100px; height: 40px; text-align: center;}
+
+/* Detailed view styling */
+.detail-header {
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    height: 60px;
+    font: 18px sans-serif;
+    font-weight: bold;
+    background: linear-gradient(
+        rgba(247, 222, 222, 0.664), 
+        rgba(0, 0, 0, 0.1)
+      );
+}
+
+.detail-body {
+    display: grid;
+    padding: 15px;
+    padding-bottom: 0px;
+    height: 300px;
+}
