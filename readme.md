@@ -1,8 +1,10 @@
 # D&D Monster Statistics
 
 ## Website
+http://fordahalibut.com/4630-project/
 
 ## Demo Video
+[Demo Video](https://youtu.be/4U5bH4RTpO8) 
 
 ## Contents
 ### Code
