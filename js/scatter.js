@@ -185,9 +185,29 @@ class ScatterPlot{
             .attr('cy', d=> this.yScale(d[yIndicator]))
             .attr('fill', d=> this.colorScale(d[colorIndicator]))
             .attr('r', 10)
-            .on('mouseup', (d,i) => {
+            .attr('opacity', 0.6)
+            .on('click', function(){
 
-                // Update selections
+                // Retrieve id of previous and current selection
+                let prevID = appState.selected[0].index
+                let newID = d3.select(this).attr('id');
+
+                if (prevID != newID) {
+                    // Update selection styling
+                    d3.select(`#${prevID}`).classed('selected', false);
+                    d3.select(`#row-${prevID}`).classed('selected', false);
+
+                    d3.select(this).classed('selected', true);
+                    d3.select(`#row-${newID}`).classed('selected', true);
+
+                    // Scroll table to selected row
+                    document.querySelector(`#row-${newID}`)
+                        .scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+
+                    // Update appState selection
+                    appState.selected = appState.monsterData.filter(monster => monster.index === newID);
+
+                }
 
             })
             .on('mouseover', function(d) {

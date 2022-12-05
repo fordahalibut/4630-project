@@ -21,6 +21,7 @@ loadData().then((loadedData) => {
     // Store the loaded data into the application state
     appState.monsterData = loadedData.monsterData;
     appState.filteredData = appState.monsterData;
+    appState.selected = appState.monsterData.filter(monster => monster.index === 'aboleth');
   
 
     // Create new view objects
@@ -31,6 +32,7 @@ loadData().then((loadedData) => {
     const scatter = new ScatterPlot(appState);
     scatter.drawScatterplot();
 
+    
     const detailed = new DetailedView(appState);
   
 
@@ -38,15 +40,9 @@ loadData().then((loadedData) => {
     // Global filter behavior
     $(document).ready(function(){
 
-        // Selection logic
-        $('.table > tbody > tr').click(function() {
-            $(this).toggleClass("selected");
-            console.log('here');
-        });
-
-        $('circle').click(function() {
-            $(this).toggleClass('selected');
-        });
+        // Initial selection
+        $(`#${appState.selected[0].index}`).toggleClass('selected');
+        $(`#row-${appState.selected[0].index}`).toggleClass('selected');
 
         // Filter collapse behavior
         $('.collapsible').click(function() {

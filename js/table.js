@@ -104,7 +104,30 @@ class Table {
             .selectAll('tr')
             .data(this.filteredData)
             .join('tr')
-            .attr('id', d => `row-${d.index}`);
+            .attr('id', d => `row-${d.index}`)
+            .on('click', function(){
+
+                // Retrieve id of previous and current selection
+                let prevID = appState.selected[0].index
+                let newID = d3.select(this).attr('id').substring(4);
+
+                if (prevID != newID) {
+                    // Update selection styling
+                    d3.select(`#${prevID}`).classed('selected', false);
+                    d3.select(`#row-${prevID}`).classed('selected', false);
+
+                    d3.select(`#${newID}`).classed('selected', true);
+                    d3.select(this).classed('selected', true);
+
+                    // Scroll table to selected row
+                    document.querySelector(`#row-${newID}`)
+                        .scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+
+                    // Update appState selection
+                    appState.selected = appState.monsterData.filter(monster => monster.index === newID);
+
+                }
+            });
 
         let tds = rows.selectAll('td')
             .data(this.rowToCellDataTransform)
@@ -337,6 +360,20 @@ class Table {
                 }
 
                 this.drawTable();
+
+                // Retrieve id of previous and current selection
+                let prevID = appState.selected[0].index;
+                let newID = d3.select('tbody > tr').attr('id').substring(4);
+
+                // Update selection styling
+                d3.select(`#${prevID}`).classed('selected', false);
+                d3.select(`#row-${prevID}`).classed('selected', false);
+
+                d3.select(`#${newID}`).classed('selected', true);
+                d3.select(`#row-${newID}`).classed('selected', true);
+
+                // Update appState selection
+                appState.selected = appState.monsterData.filter(monster => monster.index === newID);
             })
 
     }

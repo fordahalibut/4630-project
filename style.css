@@ -50,8 +50,14 @@ th #stats {
     text-align: center;
 }
 
-.selected {
+div .selected {
     background: rgb(143, 149, 156);
+}
+
+.selected {
+    stroke-width: 2px;
+    stroke: black;
+    opacity: 1;
 }
 
 /* Filter styling */
